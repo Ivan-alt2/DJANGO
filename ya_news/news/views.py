@@ -1,6 +1,7 @@
 from django.conf import settings
+from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
 
@@ -102,3 +103,9 @@ class CommentUpdate(CommentBase, generic.UpdateView):
 class CommentDelete(CommentBase, generic.DeleteView):
     """Удаление комментария."""
     template_name = 'news/delete.html'
+
+
+def logout_view(request):
+    """Выход из учётной записи с отображением страницы 'Вы вышли'."""
+    logout(request)
+    return render(request, 'registration/logged_out.html')
