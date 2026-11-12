@@ -1,16 +1,11 @@
-from django.urls import path
+from django.contrib import admin
+from django.urls import include, path
 
-from news import views
-
-app_name = 'news'
+from news.views import logout_view
 
 urlpatterns = [
-    path('', views.NewsList.as_view(), name='home'),
-    path('news/<int:pk>/', views.NewsDetailView.as_view(), name='detail'),
-    path(
-        'delete_comment/<int:pk>/',
-        views.CommentDelete.as_view(),
-        name='delete'
-    ),
-    path('edit_comment/<int:pk>/', views.CommentUpdate.as_view(), name='edit'),
+    path('admin/', admin.site.urls),
+    path('users/logout/', logout_view, name='logout'),
+    path('users/', include('django.contrib.auth.urls')),
+    path('', include('news.urls')),
 ]
